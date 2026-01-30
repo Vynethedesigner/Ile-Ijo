@@ -4,7 +4,7 @@
  */
 
 import { useLayoutEffect, useRef } from 'react';
-import { gsap, ScrollTrigger } from '../../utils/gsap';
+import { gsap } from '../../utils/gsap';
 import styles from './Gallery.module.css';
 
 // Gallery images - dance/event photos from Unsplash

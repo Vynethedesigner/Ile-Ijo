@@ -4,7 +4,7 @@
  */
 
 import { useRef, useLayoutEffect } from 'react';
-import { gsap, ScrollTrigger } from '../../utils/gsap';
+import { gsap } from '../../utils/gsap';
 import styles from './Announcement.module.css';
 
 const ANNOUNCEMENTS = [
