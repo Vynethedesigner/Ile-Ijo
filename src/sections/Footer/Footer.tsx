@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect, useEffect } from 'react';
+import { useRef, useLayoutEffect, useEffect, useState } from 'react';
 import { gsap } from '../../utils/gsap';
 import styles from './Footer.module.css';
 
@@ -12,9 +12,25 @@ declare global {
     }
 }
 
+// Breakpoint for large screens
+const LARGE_SCREEN_BREAKPOINT = 1440;
+
 export function Footer() {
     const marqueeRef = useRef<HTMLDivElement>(null);
     const webglRef = useRef<HTMLDivElement>(null);
+    const [isLargeScreen, setIsLargeScreen] = useState(false);
+
+    // Detect screen size on mount and resize
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsLargeScreen(window.innerWidth > LARGE_SCREEN_BREAKPOINT);
+        };
+
+        checkScreenSize();
+        window.addEventListener('resize', checkScreenSize);
+
+        return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
 
     // Load Unicorn Studio script
     useEffect(() => {
@@ -101,6 +117,7 @@ export function Footer() {
                     ref={webglRef}
                     data-us-project="iMcdX5PHFolnrGMe4k3j"
                     className={styles.webglEmbed}
+                    style={isLargeScreen ? { width: '1920px', height: '900px' } : undefined}
                 />
             </div>
 

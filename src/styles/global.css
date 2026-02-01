@@ -16,11 +16,14 @@
 html {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    width: 100%;
 }
 
 body {
     background-color: var(--color-background);
     overflow-x: hidden;
+    width: 100%;
+    margin: 0;
 }
 
 /* Lenis smooth scroll target */

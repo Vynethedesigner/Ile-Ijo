@@ -3,7 +3,9 @@
     position: sticky;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
+    min-width: 100vw;
+    margin-left: calc(-50vw + 50%);
     z-index: 0;
     /* Behind main content */
     background-color: var(--color-primary);
@@ -16,10 +18,15 @@
     border-top: none;
 }
 
-/* WebGL Background */
+/* WebGL Background - centered, scales up to 1920px for large screens */
 .webglBackground {
     position: absolute;
-    inset: 0;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1920px;
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
@@ -48,10 +55,11 @@
     position: absolute;
     inset: 0;
     background-image: url('/images/footer-pattern.png');
-    background-size: 800px;
-    background-repeat: repeat;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     opacity: 0.05;
-    /* Even more subtle */
+    /* Subtle pattern */
     mix-blend-mode: overlay;
     pointer-events: none;
     z-index: 0;
@@ -158,6 +166,8 @@
     padding-bottom: var(--space-4);
     line-height: 0.8;
     user-select: none;
+    display: flex;
+    justify-content: center;
 }
 
 .marqueeText {
@@ -165,11 +175,11 @@
     font-size: 16vw;
     color: var(--color-white);
     display: inline-block;
-    padding-left: 20px;
     will-change: transform;
     font-weight: var(--font-bold);
     text-transform: uppercase;
     opacity: 0.15;
+    text-align: center;
     /* Increased from 0.05 for better visibility */
 }
 
