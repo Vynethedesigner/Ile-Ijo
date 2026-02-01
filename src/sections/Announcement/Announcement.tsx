@@ -105,8 +105,8 @@ export function Announcement() {
 
     return (
         <section className={styles.announcement} ref={sectionRef}>
+            <h2 className={styles.headerTitle} ref={titleRef}>ANNOUNCEMENTS</h2>
             <div className={styles.container}>
-                <h2 className={styles.headerTitle} ref={titleRef}>ANNOUNCEMENTS</h2>
 
                 <div className={styles.grid} ref={gridRef}>
                     {ANNOUNCEMENTS.map((item) => (

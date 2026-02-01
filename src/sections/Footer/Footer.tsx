@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect, useEffect, useState } from 'react';
+import { useRef, useLayoutEffect, useEffect } from 'react';
 import { gsap } from '../../utils/gsap';
 import styles from './Footer.module.css';
 
@@ -12,24 +12,31 @@ declare global {
     }
 }
 
-// Breakpoint for large screens
-const LARGE_SCREEN_BREAKPOINT = 1440;
-
 export function Footer() {
     const marqueeRef = useRef<HTMLDivElement>(null);
     const webglRef = useRef<HTMLDivElement>(null);
-    const [isLargeScreen, setIsLargeScreen] = useState(false);
+    const footerRef = useRef<HTMLElement>(null);
+    const spacerRef = useRef<HTMLDivElement>(null);
 
-    // Detect screen size on mount and resize
-    useEffect(() => {
-        const checkScreenSize = () => {
-            setIsLargeScreen(window.innerWidth > LARGE_SCREEN_BREAKPOINT);
+    // Initialize logic for spacer
+    useLayoutEffect(() => {
+        if (!footerRef.current) return;
+
+        // Create spacer if using portal or just use ref if in-tree
+        // Here we assume a spacer div is rendered before the footer.
+
+        const updateHeight = () => {
+            if (footerRef.current && spacerRef.current) {
+                const height = footerRef.current.offsetHeight;
+                spacerRef.current.style.height = `${height}px`;
+            }
         };
 
-        checkScreenSize();
-        window.addEventListener('resize', checkScreenSize);
+        const observer = new ResizeObserver(updateHeight);
+        observer.observe(footerRef.current);
+        updateHeight(); // Initial check
 
-        return () => window.removeEventListener('resize', checkScreenSize);
+        return () => observer.disconnect();
     }, []);
 
     // Load Unicorn Studio script
@@ -57,27 +64,21 @@ export function Footer() {
 
         // Remove Unicorn Studio badge
         const removeBadge = () => {
-            // Check in the webgl container
             if (webglRef.current) {
                 const badges = webglRef.current.querySelectorAll('a[href*="unicorn.studio"]');
                 badges.forEach(badge => badge.remove());
             }
-            // Also check globally in case badge is added elsewhere
             const globalBadges = document.querySelectorAll('a[href*="unicorn.studio"]');
             globalBadges.forEach(badge => badge.remove());
         };
 
-        // Watch for badge being added to the document
         const observer = new MutationObserver(() => {
             removeBadge();
         });
 
         observer.observe(document.body, { childList: true, subtree: true });
 
-        // Also run on interval for extra reliability (badge appears after a delay)
         const intervalId = setInterval(removeBadge, 500);
-
-        // Stop interval after 10 seconds
         const cleanupTimeoutId = setTimeout(() => {
             clearInterval(intervalId);
         }, 10000);
@@ -92,7 +93,6 @@ export function Footer() {
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            // Infinite Marquee Animation
             const mm = gsap.matchMedia();
 
             mm.add("(min-width: 0px)", () => {
@@ -103,66 +103,72 @@ export function Footer() {
                     repeat: -1,
                 });
             });
-
         });
 
         return () => ctx.revert();
     }, []);
 
     return (
-        <footer className={styles.footer}>
-            {/* Unicorn Studio WebGL Background */}
-            <div className={styles.webglBackground}>
-                <div
-                    ref={webglRef}
-                    data-us-project="iMcdX5PHFolnrGMe4k3j"
-                    className={styles.webglEmbed}
-                    style={isLargeScreen ? { width: '1920px', height: '900px' } : undefined}
-                />
-            </div>
+        <>
+            {/* Spacer to push content up so footer can be revealed */}
+            <div ref={spacerRef} style={{ width: '100%', position: 'relative', zIndex: 1, backgroundColor: 'transparent', pointerEvents: 'none' }} />
 
-            <div className={styles.container}>
-                {/* Top Row */}
-                <div className={styles.topRow}>
-                    <div className={styles.column}>
-                        <span className={styles.label}>
-                            Fill the form to get into<br />
-                            exclusive house parties.
-                        </span>
+            <footer className={styles.footer} ref={footerRef}>
+                {/* WebGL overlay - centered, max 1920px wide */}
+                <div className={styles.webglBackground}>
+                    <div
+                        ref={webglRef}
+                        data-us-project="iMcdX5PHFolnrGMe4k3j"
+                        className={styles.webglEmbed}
+                    />
+                </div>
+
+                <div className={styles.container}>
+                    {/* Top Row */}
+                    <div className={styles.topRow}>
+                        <div className={styles.column}>
+                            <span className={styles.label}>
+                                Fill the form to get into<br />
+                                exclusive house parties.
+                            </span>
+                        </div>
+
+                        <div className={`${styles.column} ${styles.center}`}>
+                            <img src="/logo.svg" alt="Ile Ijo" className={styles.logo} />
+                        </div>
+
+                        <div className={`${styles.column} ${styles.right}`}>
+                            <span className={styles.label}>Get In Touch</span>
+                            <a href="mailto:hello@ileijo.com" className={styles.link}>
+                                HELLO@ILEIJO.COM
+                            </a>
+                        </div>
                     </div>
 
-                    <div className={`${styles.column} ${styles.center}`}>
-                        <img src="/logo.svg" alt="Ile Ijo" className={styles.logo} />
-                    </div>
+                    {/* Bottom Row */}
+                    <div className={styles.bottomRow}>
+                        <span>©2026 ILEIJO.LIFE® ALL RIGHTS RESERVED</span>
 
-                    <div className={`${styles.column} ${styles.right}`}>
-                        <span className={styles.label}>Get In Touch</span>
-                        <a href="mailto:hello@ileijo.com" className={styles.link}>
-                            HELLO@ILEIJO.COM
-                        </a>
+                        <div className={styles.socials}>
+                            <a href="#" className={styles.socialLink}>FACEBOOK</a>
+                            <a href="#" className={styles.socialLink}>FOUNDER</a>
+                            <a href="#" className={styles.socialLink}>INSTAGRAM</a>
+                        </div>
+
+                        <span>CRAFTED IN LAGOS BY ANTIGRAVITY</span>
                     </div>
                 </div>
 
-                {/* Bottom Row */}
-                <div className={styles.bottomRow}>
-                    <span>©2026 ILEIJO.LIFE® ALL RIGHTS RESERVED</span>
-
-                    <div className={styles.socials}>
-                        <a href="#" className={styles.socialLink}>FACEBOOK</a>
-                        <a href="#" className={styles.socialLink}>FOUNDER</a>
-                        <a href="#" className={styles.socialLink}>INSTAGRAM</a>
+                {/* Huge Marquee - Duplicated for seamless loop */}
+                <div className={styles.marqueeContainer}>
+                    <div className={styles.marqueeWrapper} ref={marqueeRef}>
+                        <span className={styles.marqueeItem}>THE RHYTHM STARTS HERE —&nbsp;</span>
+                        <span className={styles.marqueeItem}>THE RHYTHM STARTS HERE —&nbsp;</span>
+                        <span className={styles.marqueeItem}>THE RHYTHM STARTS HERE —&nbsp;</span>
+                        <span className={styles.marqueeItem}>THE RHYTHM STARTS HERE —&nbsp;</span>
                     </div>
-
-                    <span>CRAFTED IN LAGOS BY ANTIGRAVITY</span>
                 </div>
-            </div>
-
-            {/* Huge Marquee */}
-            <div className={styles.marqueeContainer}>
-                <div className={styles.marqueeText} ref={marqueeRef}>
-                    THE RHYTHM STARTS HERE — THE RHYTHM STARTS HERE —
-                </div>
-            </div>
-        </footer>
+            </footer>
+        </>
     );
 }

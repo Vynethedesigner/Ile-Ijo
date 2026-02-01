@@ -1,76 +1,102 @@
-/* Footer Reveal Logic */
+/* =====================================================
+   FOOTER STYLES
+   Clean implementation: Red background + transparent WebGL overlay
+   ===================================================== */
+
+/* Footer - Sticky Reveal Effect */
 .footer {
-    position: sticky;
+    position: fixed;
     bottom: 0;
     left: 0;
-    width: 100vw;
-    min-width: 100vw;
-    margin-left: calc(-50vw + 50%);
+    width: 100%;
     z-index: 0;
-    /* Behind main content */
+    /* Sits behind main content */
     background-color: var(--color-primary);
     color: var(--color-white);
-    padding-top: var(--space-20);
-    padding-bottom: 0;
+    padding-top: var(--space-12);
+    /* 48px - As requested */
+    padding-bottom: var(--space-8);
+    /* Added padding to protect marquee */
     overflow: hidden;
-    /* Blend mode setup */
     isolation: isolate;
-    border-top: none;
+    min-height: 90vh;
+    /* Ensure substantial height for reveal */
+    height: auto;
+    /* - Let content define height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-/* WebGL Background - centered, scales up to 1920px for large screens */
+/* ──────────────────────────────────────────────────
+   WebGL Overlay - Full width, transparent backgrounds
+   ────────────────────────────────────────────────── */
+
 .webglBackground {
     position: absolute;
     top: 0;
+    left: 0;
+    right: 0;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 1920px;
-    z-index: 0;
-    overflow: hidden;
+    z-index: 1;
     pointer-events: none;
+    overflow: hidden;
+    /* Ensure cropped content is hidden */
 }
 
 .webglEmbed {
-    width: 100%;
-    height: 100%;
-    /* Zoom in and crop to hide the badge */
-    transform: scale(1.15);
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    transform: scale(1.2);
+    /* Zoom in 20% to push badge off-screen */
     transform-origin: center center;
-    clip-path: inset(0 0 80px 0);
+}
+
+/* Force ALL Unicorn Studio elements to have transparent background */
+.webglEmbed :global(*) {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* Also target common patterns Unicorn Studio might use */
+.webglBackground :global(div),
+.webglBackground :global(canvas),
+.webglBackground :global(iframe) {
+    background-color: transparent !important;
+    background: transparent !important;
 }
 
 /* Hide Unicorn Studio badge */
-.webglBackground :global([data-us-project] > a),
-.webglBackground :global(a[href*="unicorn.studio"]) {
+.webglEmbed :global(a[href*="unicorn.studio"]) {
     display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
 }
 
-/* Background Pattern */
-.footer::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url('/images/footer-pattern.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.05;
-    /* Subtle pattern */
-    mix-blend-mode: overlay;
-    pointer-events: none;
-    z-index: 0;
+
+/* Hide WebGL on screens larger than 1600px */
+@media (min-width: 1600px) {
+    .webglBackground {
+        display: none !important;
+    }
 }
+
+
+/* ──────────────────────────────────────────────────
+   Content Container
+   ────────────────────────────────────────────────── */
 
 .container {
     position: relative;
     z-index: 10;
-    max-width: 1400px;
+    width: 100%;
+    /* Ensure width is explicit */
+    max-width: 1600px;
+    /* Increased from 1400px for wider spread */
     margin-inline: auto;
-    padding-inline: var(--space-6);
+    padding-inline: var(--section-padding-x);
+    /* Matched to Hero side margins */
     display: flex;
     flex-direction: column;
     gap: var(--space-32);
@@ -104,10 +130,11 @@
     font-weight: var(--font-bold);
     text-transform: uppercase;
     letter-spacing: var(--tracking-wide);
+    line-height: 1.1;
+    /* Tighter line height for better top alignment */
     margin-bottom: var(--space-2);
     display: block;
     color: rgba(255, 255, 255, 0.4);
-    /* Much more subtle label */
 }
 
 .link {
@@ -124,8 +151,7 @@
 
 /* Logo */
 .logo {
-    width: 280px;
-    /* Larger logo */
+    width: 180px;
     height: auto;
     display: block;
     object-fit: contain;
@@ -158,7 +184,10 @@
     color: var(--color-black);
 }
 
-/* Large Marquee Text */
+/* ──────────────────────────────────────────────────
+   Marquee
+   ────────────────────────────────────────────────── */
+
 .marqueeContainer {
     width: 100%;
     overflow: hidden;
@@ -166,11 +195,19 @@
     padding-bottom: var(--space-4);
     line-height: 0.8;
     user-select: none;
+    position: relative;
+    z-index: 5;
     display: flex;
-    justify-content: center;
+    /* Ensure wrapper takes full width */
 }
 
-.marqueeText {
+.marqueeWrapper {
+    display: flex;
+    white-space: nowrap;
+    /* Animation handled by GSAP */
+}
+
+.marqueeItem {
     font-family: var(--font-heading);
     font-size: 16vw;
     color: var(--color-white);
@@ -179,15 +216,17 @@
     font-weight: var(--font-bold);
     text-transform: uppercase;
     opacity: 0.15;
-    text-align: center;
-    /* Increased from 0.05 for better visibility */
+    padding-right: 0.2em;
+    /* Spacing between repeats */
 }
 
-/* Responsive */
+/* ──────────────────────────────────────────────────
+   Responsive
+   ────────────────────────────────────────────────── */
+
 @media (max-width: 768px) {
     .footer {
         position: relative;
-        /* Disable reveal on mobile for performance */
         z-index: auto;
         padding-bottom: var(--space-12);
     }

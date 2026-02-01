@@ -26,9 +26,8 @@
     color: var(--color-white);
     text-align: center;
     margin-bottom: var(--space-12);
-    /* Break out of container to be full viewport width */
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
+    margin-bottom: var(--space-12);
+    width: 100%;
     display: block;
 }
 
