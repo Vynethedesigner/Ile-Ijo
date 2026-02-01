@@ -27,10 +27,10 @@ export function Hero() {
                     mask: 'lines',
                     onSplit: (self: { lines: Element[] }) => {
                         gsap.from(self.lines, {
-                            duration: 0.8,
+                            duration: 1.5, // Slowed down from 0.8
                             yPercent: 100,
                             opacity: 0,
-                            stagger: 0.1,
+                            stagger: 0.15, // Slightly increased stagger
                             ease: 'expo.out',
                             delay: 0.3,
                         });
@@ -43,10 +43,10 @@ export function Hero() {
                     mask: 'chars',
                     onSplit: (self: { chars: Element[] }) => {
                         gsap.from(self.chars, {
-                            duration: 1,
+                            duration: 2, // Slowed down from 1
                             yPercent: 100,
                             opacity: 0,
-                            stagger: 0.03,
+                            stagger: 0.05, // Increased stagger
                             ease: 'expo.out',
                             delay: 0.8,
                         });
