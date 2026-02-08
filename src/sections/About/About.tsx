@@ -7,17 +7,16 @@ import { useRef, useEffect, useCallback } from 'react';
 import { gsap } from '../../utils/gsap';
 import styles from './About.module.css';
 
-// Placeholder images for the trail effect
-// Replace with actual event photos
+// Ile Ijo event photos for the trail effect
 const TRAIL_IMAGES = [
-    'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80',
-    'https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=400&q=80',
-    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&q=80',
-    'https://images.unsplash.com/photo-1504680177321-2e6a879aac86?w=400&q=80',
-    'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80',
-    'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&q=80',
-    'https://images.unsplash.com/photo-1571266028243-e4733b0f0bb0?w=400&q=80',
-    'https://images.unsplash.com/photo-1574391884720-bbc3740c59d1?w=400&q=80',
+    '/Gallery/DSC_0512.jpg',
+    '/Gallery/DSC_0559.jpg',
+    '/Gallery/DSC_0673.jpg',
+    '/Gallery/DSC_1387.jpg',
+    '/Gallery/DSC_1575.jpg',
+    '/Gallery/DSC_1622.jpg',
+    '/Gallery/DSC_1742.jpg',
+    '/Gallery/DSC_5337.jpg',
 ];
 
 // Configuration

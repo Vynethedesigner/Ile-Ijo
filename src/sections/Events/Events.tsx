@@ -7,24 +7,24 @@ import { useRef, useLayoutEffect } from 'react';
 import { gsap } from '../../utils/gsap';
 import styles from './Events.module.css';
 
-// Gallery items with varying heights
+// Gallery items with varying heights - Ile Ijo event photos
 const GALLERY_ITEMS = [
     // Column 1
-    { id: 1, image: 'https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=600&q=80', height: 'tall', index: '01' },
-    { id: 5, image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&q=80', height: 'short', index: '05' },
-    { id: 9, image: 'https://images.unsplash.com/photo-1574391884720-bbc3740c59d1?w=600&q=80', height: 'medium', index: '09' },
+    { id: 1, image: '/Gallery/DSC_9805.jpg', height: 'tall', index: '01' },
+    { id: 5, image: '/Gallery/DSC_5337.jpg', height: 'short', index: '05' },
+    { id: 9, image: '/Gallery/DSC_6323.jpg', height: 'medium', index: '09' },
     // Column 2
-    { id: 2, image: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=600&q=80', height: 'medium', index: '02' },
-    { id: 6, image: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&q=80', height: 'tall', index: '06' },
-    { id: 10, image: 'https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=600&q=80', height: 'short', index: '10' },
+    { id: 2, image: '/Gallery/DSC_1622.jpg', height: 'medium', index: '02' },
+    { id: 6, image: '/Gallery/DSC_1387.jpg', height: 'tall', index: '06' },
+    { id: 10, image: '/Gallery/DSC_6344.jpg', height: 'short', index: '10' },
     // Column 3
-    { id: 3, image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80', height: 'tall', index: '03' },
-    { id: 7, image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80', height: 'medium', index: '07' },
-    { id: 11, image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80', height: 'tall', index: '11' },
+    { id: 3, image: '/Gallery/DSC_0673.jpg', height: 'tall', index: '03' },
+    { id: 7, image: '/Gallery/DSC_5512.jpg', height: 'medium', index: '07' },
+    { id: 11, image: '/Gallery/DSC_1575.jpg', height: 'tall', index: '11' },
     // Column 4
-    { id: 4, image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80', height: 'short', index: '04' },
-    { id: 8, image: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&q=80', height: 'medium', index: '08' },
-    { id: 12, image: 'https://images.unsplash.com/photo-1504680177321-2e6a879aac86?w=600&q=80', height: 'tall', index: '12' },
+    { id: 4, image: '/Gallery/DSC_6414.jpg', height: 'short', index: '04' },
+    { id: 8, image: '/Gallery/DSC_6435.jpg', height: 'medium', index: '08' },
+    { id: 12, image: '/Gallery/DSC_1742.jpg', height: 'tall', index: '12' },
 ];
 
 export function Events() {

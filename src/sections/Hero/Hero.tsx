@@ -4,7 +4,7 @@
  * minimal nav, centered CTA, and large brand name at bottom
  */
 
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useEffect, useState } from 'react';
 import { gsap, SplitText } from '../../utils/gsap';
 import styles from './Hero.module.css';
 
@@ -12,6 +12,9 @@ export function Hero() {
     const containerRef = useRef<HTMLElement>(null);
     const taglineRef = useRef<HTMLParagraphElement>(null);
     const brandRef = useRef<HTMLHeadingElement>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const posterRef = useRef<HTMLImageElement>(null);
+    const [videoLoaded, setVideoLoaded] = useState(false);
 
     useLayoutEffect(() => {
         // Wait for fonts to load before splitting text
@@ -58,16 +61,72 @@ export function Hero() {
         });
     }, []);
 
+    // Force video playback - handles browser autoplay restrictions
+    useEffect(() => {
+        const video = videoRef.current;
+        const poster = posterRef.current;
+        if (!video) return;
+
+        const playVideo = () => {
+            video.play().catch(() => {
+                // Autoplay was prevented, try again on user interaction
+            });
+        };
+
+        // Fade out poster when video starts playing
+        const handlePlaying = () => {
+            if (!videoLoaded && poster) {
+                setVideoLoaded(true);
+                gsap.to(poster, {
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    onComplete: () => {
+                        poster.style.display = 'none';
+                    }
+                });
+            }
+        };
+
+        // Play on load
+        playVideo();
+
+        // Resume if paused unexpectedly (e.g., tab switching, buffering)
+        const handlePause = () => {
+            // Small delay to avoid rapid pause/play cycles
+            setTimeout(playVideo, 100);
+        };
+
+        video.addEventListener('pause', handlePause);
+        video.addEventListener('playing', handlePlaying);
+
+        return () => {
+            video.removeEventListener('pause', handlePause);
+            video.removeEventListener('playing', handlePlaying);
+        };
+    }, [videoLoaded]);
+
     return (
         <section className={styles.hero} id="hero" ref={containerRef}>
             {/* Background Media */}
             <div className={styles.background}>
+                {/* Fallback poster image - shown while video loads */}
+                <img
+                    ref={posterRef}
+                    src="/hero-poster.jpg"
+                    alt=""
+                    className={styles.backgroundMedia}
+                    style={{ position: 'absolute', zIndex: 1 }}
+                />
                 <video
+                    ref={videoRef}
                     className={styles.backgroundMedia}
                     autoPlay
                     muted
                     loop
                     playsInline
+                    preload="auto"
+                    style={{ position: 'relative', zIndex: 0 }}
                 >
                     <source src="/hero-video.mp4" type="video/mp4" />
                 </video>

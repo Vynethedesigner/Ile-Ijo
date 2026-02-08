@@ -11,7 +11,7 @@ const ANNOUNCEMENTS = [
     {
         id: 1,
         title: 'Spring Celebration',
-        image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80',
+        image: '/Gallery/DSC_0512.jpg',
         location: 'The Grand Hall Lagos',
         type: 'Private Event',
         index: '(01)',
@@ -20,7 +20,7 @@ const ANNOUNCEMENTS = [
     {
         id: 2,
         title: 'Movement Workshop',
-        image: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&q=80',
+        image: '/Gallery/DSC_0559.jpg',
         location: 'Dance Studio London',
         type: 'Workshop',
         index: '(02)',
@@ -29,7 +29,7 @@ const ANNOUNCEMENTS = [
     {
         id: 3,
         title: 'Cultural Exchange',
-        image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80',
+        image: '/Gallery/DSC_0673.jpg',
         location: 'Art Center New York',
         type: 'Community',
         index: '(03)',
@@ -38,7 +38,7 @@ const ANNOUNCEMENTS = [
     {
         id: 4,
         title: 'Rhythm & Soul',
-        image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80',
+        image: '/Gallery/DSC_1387.jpg',
         location: 'Underground Berlin',
         type: 'Nightlife',
         index: '(04)',
@@ -47,7 +47,7 @@ const ANNOUNCEMENTS = [
     {
         id: 5,
         title: 'Afro-House Night',
-        image: 'https://images.unsplash.com/photo-1574391884720-bbc3740c59d1?w=800&q=80',
+        image: '/Gallery/DSC_6579.jpg',
         location: 'The Warehouse',
         type: 'Club Event',
         index: '(05)',
@@ -56,7 +56,7 @@ const ANNOUNCEMENTS = [
     {
         id: 6,
         title: 'Community Jam',
-        image: 'https://images.unsplash.com/photo-1504680177321-2e6a879aac86?w=800&q=80',
+        image: '/Gallery/DSC_9805.jpg',
         location: 'Open Space London',
         type: 'Free Session',
         index: '(06)',
