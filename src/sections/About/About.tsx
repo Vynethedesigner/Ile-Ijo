@@ -165,6 +165,13 @@ export function About() {
         const section = sectionRef.current;
         if (!section) return;
 
+        // Disable mouse trail on mobile/touch devices
+        const isMobile = window.matchMedia('(max-width: 768px)').matches ||
+            'ontouchstart' in window ||
+            navigator.maxTouchPoints > 0;
+
+        if (isMobile) return; // Don't add event listeners on mobile
+
         section.addEventListener('mousemove', handleMouseMove);
         section.addEventListener('mouseenter', handleMouseEnter);
         section.addEventListener('mouseleave', handleMouseLeave);

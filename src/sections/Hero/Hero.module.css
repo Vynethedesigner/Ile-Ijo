@@ -131,6 +131,17 @@
     .nav {
         display: none;
     }
+
+    .tagline {
+        font-size: 14px;
+        padding-inline: var(--space-4);
+        opacity: 1;
+        /* Ensure visible on mobile even if animation fails */
+    }
+
+    .brandText {
+        font-size: clamp(2.5rem, 12vw, 6rem);
+    }
 }
 
 /* Main content area - centered CTA */

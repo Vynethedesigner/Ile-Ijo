@@ -226,19 +226,41 @@
 
 @media (max-width: 768px) {
     .footer {
-        position: relative;
-        z-index: auto;
-        padding-bottom: var(--space-12);
+        /* Keep fixed for garage door effect on mobile */
+        position: fixed;
+        min-height: 70vh;
+        padding-top: var(--space-8);
+    }
+
+    .container {
+        gap: var(--space-12);
     }
 
     .topRow {
         flex-direction: column;
         text-align: center;
+        align-items: center;
         gap: var(--space-12);
+    }
+
+    .column {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .column.right {
         text-align: center;
+        align-items: center;
+    }
+
+    .label {
+        text-align: center;
+    }
+
+    .logo {
+        width: 120px;
     }
 
     .bottomRow {
@@ -246,5 +268,9 @@
         align-items: center;
         gap: var(--space-4);
         text-align: center;
+    }
+
+    .marqueeItem {
+        font-size: 20vw;
     }
 }
