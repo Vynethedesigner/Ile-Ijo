@@ -155,7 +155,7 @@ export function Footer() {
                             <a href="#" className={styles.socialLink}>INSTAGRAM</a>
                         </div>
 
-                        <span>CRAFTED IN LAGOS BY ANTIGRAVITY</span>
+                        <a href="https://www.linkedin.com/in/uche-divine/" target="_blank" rel="noopener noreferrer" className={styles.creditLink}>CRAFTED BY UCHE DIVINE</a>
                     </div>
                 </div>
 

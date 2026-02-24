@@ -7,7 +7,7 @@ import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { Hero } from './sections/Hero/Hero';
 import { About } from './sections/About/About';
 import { Announcement } from './sections/Announcement/Announcement';
-import { Breather } from './sections/Breather/Breather';
+
 import { Events } from './sections/Events/Events';
 import { Footer } from './sections/Footer/Footer';
 import './styles/global.css';
@@ -23,7 +23,7 @@ function App() {
         <Hero />
         <About />
         <Announcement />
-        <Breather />
+
         <Events />
       </div>
       <Footer />

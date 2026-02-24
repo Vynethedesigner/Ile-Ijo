@@ -197,21 +197,14 @@ export function About() {
             {/* Body Copy */}
             <div className={styles.body}>
                 <p className={styles.paragraph}>
-                    <strong>Ilé Ijo is a cultural experience celebrating movement, rhythm, and community.</strong>{' '}
-                    We bring people together through the universal language of dance, creating spaces where
-                    cultures connect and stories unfold through motion.
+                    <strong>Ilé Ijó is a Nigerian-based electronic music event curating experiences around and experimenting with electronic dance music sounds from Africa and beyond.</strong>
                 </p>
 
                 <p className={styles.paragraph}>
-                    Born from a passion for African dance traditions and contemporary expression,
-                    our events are a masterful blend of vibrant energy, world-class DJs, and an
-                    atmosphere that feels like home. Based in <strong>London</strong>, we've built a
+                    Born from a passion for dance music and contemporary expression,
+                    our events blend community energy, world-class DJs, and an
+                    atmosphere that feels like home. Based in <strong>Nigeria</strong>, we have built a
                     community of dance lovers who share our vision.
-                </p>
-
-                <p className={styles.emphasis}>
-                    Because a gathering became a movement. A movement became a culture.
-                    And culture is about to become legendary.
                 </p>
             </div>
         </section>

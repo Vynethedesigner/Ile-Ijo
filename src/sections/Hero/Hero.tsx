@@ -6,6 +6,8 @@
 
 import { useLayoutEffect, useRef, useEffect, useState } from 'react';
 import { gsap, SplitText } from '../../utils/gsap';
+import { sanityClient, ANNOUNCEMENTS_QUERY } from '../../lib/sanity';
+import type { SanityAnnouncement } from '../../lib/sanity';
 import styles from './Hero.module.css';
 
 export function Hero() {
@@ -15,6 +17,23 @@ export function Hero() {
     const videoRef = useRef<HTMLVideoElement>(null);
     const posterRef = useRef<HTMLImageElement>(null);
     const [videoLoaded, setVideoLoaded] = useState(false);
+    const [upcomingEvents, setUpcomingEvents] = useState<SanityAnnouncement[]>([]);
+
+    // Fetch upcoming events from Sanity
+    useEffect(() => {
+        sanityClient
+            .fetch<SanityAnnouncement[]>(ANNOUNCEMENTS_QUERY)
+            .then((data) => {
+                if (data && data.length > 0) {
+                    // Show only events marked as "new", limit to 2
+                    const newEvents = data.filter((e) => e.isNew).slice(0, 2);
+                    setUpcomingEvents(newEvents.length > 0 ? newEvents : data.slice(0, 2));
+                }
+            })
+            .catch(() => {
+                // Silently fail — hardcoded fallback stays
+            });
+    }, []);
 
     useLayoutEffect(() => {
         // Wait for fonts to load before splitting text
@@ -138,16 +157,31 @@ export function Hero() {
                 <div className={styles.logo}>
                     <img src="/logo.svg" alt="Ilé Ijo" className={styles.logoImage} />
                 </div>
-                <div className={styles.contactInfo}>
-                    <span className={styles.contactLabel}>Get in Touch</span>
-                    <a href="mailto:ileijong@gmail.com" className={styles.contactEmail}>Ileijong@gmail.com</a>
+                <div className={styles.headerRight}>
+                    <div className={styles.upcomingEvents}>
+                        <span className={styles.upcomingLabel}>Upcoming Events</span>
+                        {upcomingEvents.map((event) => (
+                            <a key={event._id} href="#about" className={styles.eventItem}>
+                                {event.title} {event.isNew && <span className={styles.newBadge}>NEW</span>}
+                            </a>
+                        ))}
+                        {upcomingEvents.length === 0 && (
+                            <>
+                                <span className={styles.eventItem}>Coming Soon</span>
+                            </>
+                        )}
+                    </div>
+                    <div className={styles.contactInfo}>
+                        <span className={styles.contactLabel}>Get in Touch</span>
+                        <a href="mailto:ileijong@gmail.com" className={styles.contactEmail}>Ileijong@gmail.com</a>
+                    </div>
                 </div>
             </header>
 
             {/* Centered Tagline */}
             <div className={styles.content}>
                 <p className={styles.tagline} ref={taglineRef}>
-                    A cultural experience celebrating movement, rhythm, and community.
+                    Curating future-facing dance experiences.
                 </p>
             </div>
 
